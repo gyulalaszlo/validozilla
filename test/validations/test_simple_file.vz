@@ -1,0 +1,13 @@
+# a comment looks like this
+
+# Specify the target class of the validation
+Validate User
+  
+  
+  # a field is specified by
+  # <fieldname> is
+  username is
+    required
+    a string
+    alphanumeric
+    between 3 and 15 characters

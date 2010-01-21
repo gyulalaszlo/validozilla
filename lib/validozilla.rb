@@ -4,3 +4,5 @@ $:.unshift(File.dirname(__FILE__)) unless
 module Validozilla
   VERSION = '0.0.1'
 end
+
+%w(vz exceptions).each { |f| require "validozilla/#{f}"}
