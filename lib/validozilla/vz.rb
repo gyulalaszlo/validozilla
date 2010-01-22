@@ -6,6 +6,8 @@ module Validozilla
     attr_reader :text
     attr_reader :filename
     attr_reader :expression_stream
+    
+
 
     # create a new validation generator
     # options:
@@ -25,6 +27,8 @@ module Validozilla
       end
       
       raise( NoTextError, @filename ) if @text == nil
+      
+
       
       split
       
@@ -59,7 +63,7 @@ module Validozilla
         last_line_indent = current_line_indent
       end
       
-      @expression_stream.close
+      @expression_stream.close!
     end
     
     # Strip away empty lines and comments

@@ -5,34 +5,70 @@ module Validozilla
     attr_reader :contents
     attr_reader :current_depth
     
-    def initialize
-      @contents = []
-      @current_depth = 0
+    attr_reader :index
+    
+    def initialize an_array=nil
+      if an_array
+        @contents = an_array
+        @current_depth = 0
+      else
+        @contents = []
+        @current_depth = 1
+        @index = 0
+      
+        @current = []
+        @nesting = [@current]
+      end
     end
+    
+    
     
     def << element
       if element.is_a? Array
         element.reject! { |e| e == ''  }
-        @contents.push *(element.flatten)
+        @current.push( *(element.flatten))
       else
-        @contents.push element.to_s
+        @current.push element.to_s
       end
+
+      @index = @contents.size - 1 
     end
+    
+    
+    
+    
     
     def level_up
       @current_depth -= 1
-      @contents << :up
+
+      @current = @nesting.pop
+      @contents = @current if @current_depth == 0
     end
+    
+    
+    
+    
     
     def level_down
       @current_depth += 1
-      @contents << :down
+      new_level = []
+      @current << new_level
+      
+      @nesting.push @current
+      @current = new_level
     end
     
     
-    def close
+    def close!
       @current_depth.times { level_up }
     end
+    
+    
+    def [] idx
+      @contents[idx]
+    end
+
+    
     
     
   end

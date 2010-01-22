@@ -6,7 +6,7 @@ class TestValidozilla < Test::Unit::TestCase
   end
   
   def test_simple_init
-    vz = Validozilla::Vz.new( :text => 'Validate TestObject' )
+    vz = Validozilla::Vz.new( :text => "Validate TestObject\n" )
     assert_equal ['Validate TestObject'], vz.expression_stream.contents
   end
   
@@ -14,14 +14,10 @@ class TestValidozilla < Test::Unit::TestCase
   def test_simple_parsing
     vz = Validozilla::Vz.new( :file => vz_path('test_simple_file') )
     assert_equal ["Validate User",
-     :down,
-     "username is",
-     :down,     
-     "required",
-     "a string",
-     "alphanumeric",
-     "between 3 and 15 characters",
-     :up, :up], vz.expression_stream.contents
+     ["username is",
+      ["required", "a string", "alphanumeric", "between 3 and 15 characters"]]], vz.expression_stream.contents
   end
+  
+
   
 end

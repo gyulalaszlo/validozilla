@@ -10,4 +10,4 @@ Validate User
     required
     a string
     alphanumeric
-    between 3 and 15 characters
+    between 3 and 15 characters    

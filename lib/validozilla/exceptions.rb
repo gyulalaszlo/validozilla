@@ -10,5 +10,22 @@ module Validozilla
 
   class TabsUsedError < RuntimeError    
   end  
+  
+  
+  class VzSyntaxError < RuntimeError
+    
+    attr_reader :message
+    attr_reader :code
+    attr_reader :hint
+    
+    def initialize(message, code, hint='')
+      @message = message
+      @code = code
+      
+      @hint = hint
+    end
+    
+    
+  end
 end
 
