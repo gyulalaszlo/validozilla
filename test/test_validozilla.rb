@@ -11,7 +11,7 @@ class TestValidozilla < Test::Unit::TestCase
   end
   
   
-  def test_simple_file_load
+  def test_simple_parsing
     vz = Validozilla::Vz.new( :file => vz_path('test_simple_file') )
     assert_equal ["Validate User",
      :down,
