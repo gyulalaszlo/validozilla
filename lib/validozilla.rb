@@ -5,4 +5,4 @@ module Validozilla
   VERSION = '0.0.1'
 end
 
-%w(vz exceptions).each { |f| require "validozilla/#{f}"}
+%w(vz expression_stream exceptions).each { |f| require "validozilla/#{f}"}
