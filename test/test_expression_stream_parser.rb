@@ -58,7 +58,12 @@ class TestExpressionStreamParser < Test::Unit::TestCase
     output = parser.blueprint
 
     assert_equal( ["username", "password", "calendar_address",  "calendar_username", "calendar_password"], output.field_names )
-    assert_equal( {'username' => [[:is_string], [:is_string_min_length, "15"]]}, output.field_attributes )
+    assert_equal( {
+      'username' => [[:is_required], [:is_string], [:is_alphanumeric_string], [:is_string_min_and_max_length, "3", "15"]],
+     "calendar_username"=>[[:is_alphanumeric_string], [:has_no_spaces]],
+     "calendar_address"=>[[:is_alphanumeric_string]],
+     "password"=> [[:is_required], [:is_string], [:is_string_min_length, "6"], [:is_string_max_length, "15"],       [:has_format, "/[a-zA-Z0-9_/.]/"]],
+     "calendar_password"=>[[:is_string], [:is_string_min_length, "6"]]}, output.field_attributes )
     
   end
   

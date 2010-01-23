@@ -17,7 +17,7 @@ module Validozilla
     
     def add_attribute field_name, *attrs
       @field_attributes[field_name] = [] unless @field_attributes[field_name]
-      @field_attributes[field_name].push (*attrs)
+      @field_attributes[field_name].push(*attrs)
     end
     
     

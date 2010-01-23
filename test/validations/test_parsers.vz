@@ -20,7 +20,8 @@ Validate User
     matches /[a-zA-Z0-9_/.]/
   
   calendar_address is
-    an https url
+    # an https url
+    alphanumeric
   
   
   calendar_username is

@@ -1,14 +1,3 @@
-module Validozilla
-  module Parsers
-    
-    class Required < Validozilla::Parser
-      
-      matches( /^required$/)
-      exports :is_required
-      
-    end
-
-    
-    
-  end
+Validozilla::Parser.match do |p|
+  p.map 'Required', /^required$/ => :is_required
 end
