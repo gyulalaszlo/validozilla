@@ -46,13 +46,20 @@ module Validozilla
     
     # Read the target entity's name
     def get_validation_class_name
-      @stream.contents.each do |exprs|
-        first_expr = exprs[0]
 
-        klass_match = first_expr.match KLASS_NAME_REGEX
-        syntax_error 'Validation target class name required', first_expr, "The first expression in the vz file should be\n\rValidate <target_entity_name>" unless klass_match
-        @blueprint.klass_name = klass_match[1]
-        get_fields exprs[1]
+      @stream.contents.each do |exprs|
+        if exprs.is_a? Array
+          first_expr = exprs[0]
+
+          klass_match = first_expr.match KLASS_NAME_REGEX
+          syntax_error 'Validation target class name required', first_expr, "The first expression in the vz file should be\n\rValidate <target_entity_name>" unless klass_match
+          @blueprint.klass_name = klass_match[1]
+          get_fields exprs[1]
+        else
+          klass_match = exprs.match KLASS_NAME_REGEX
+          syntax_error 'Validation target class name required', first_expr, "The first expression in the vz file should be\n\rValidate <target_entity_name>" unless klass_match
+          @blueprint.klass_name = klass_match[1]
+        end
       end
     end
     
