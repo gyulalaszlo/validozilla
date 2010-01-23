@@ -24,7 +24,16 @@ module Validozilla
       
       @hint = hint
     end
+  end
+  
+  
+  class NoExpressionMatchError < RuntimeError
     
+    attr_reader :expression
+    
+    def initialize(expression)
+      @expression = expression
+    end
     
   end
 end

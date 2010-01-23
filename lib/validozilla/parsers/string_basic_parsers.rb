@@ -8,6 +8,13 @@ module Validozilla
       
     end
     
+    class AnAlphaNumericStringParser < Validozilla::Parser
+      
+      matches( /^alphanumeric$/)
+      exports :is_alphanumeric_string
+      
+    end
+    
     
     class StringFixedLengthParser < Validozilla::Parser
       
@@ -32,7 +39,7 @@ module Validozilla
     end
     
     
-    class StringMaxmimumLengthParser < Validozilla::Parser
+    class StringLengthParser < Validozilla::Parser
       requires :is_string
       
       matches( /^at most ([0-9]+) characters$/, 

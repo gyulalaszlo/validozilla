@@ -69,9 +69,10 @@ module Validozilla
           end
         end
       end
-      puts("Can't match expression: #{expr}")
+      raise NoExpressionMatchError.new(expr)
+      # puts("Can't match expression \"#{expr}\"")
       # no match
-      return nil
+      # return nil
     end
     
   end

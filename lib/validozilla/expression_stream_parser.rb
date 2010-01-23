@@ -65,7 +65,7 @@ module Validozilla
           field_match = match_with_syntax_error expr[0], FIELD_IS_REGEX, 'A field name must be given', 'Add a vaidated field with "<field_name> is"'
           field_name = field_match[1]
           @blueprint.field_names << field_name
-          field_properties = get_field_properties( expr)
+          field_properties = get_field_properties( expr, field_name)
           @blueprint.add_attribute( field_name, *field_properties)
           
           # puts "added field #{field_name} with value #{field_properties.inspect}"
@@ -75,13 +75,17 @@ module Validozilla
     
     
     
-    def get_field_properties input_expr
+    def get_field_properties input_expr, field_name
       o = []
       # p input_expr
       # one level deeper
       return nil unless input_expr[1].is_a? Array
       input_expr[1].each do |expr|
-        o << ParserStore.instance.match_parsers( expr )
+        begin
+          o << ParserStore.instance.match_parsers( expr )
+        rescue NoExpressionMatchError => e
+          puts "Can't match expression: \"#{e.expression}\" in field #{field_name}"
+        end
       end  
       return nil if o.size == 0
       o
