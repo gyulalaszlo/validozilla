@@ -45,6 +45,7 @@ module Validozilla
     include Singleton
     
     attr_reader :parsers
+    attr_accessor :validozilla_log
     
     def initialize
       @parsers = []
@@ -68,8 +69,7 @@ module Validozilla
           end
         end
       end
-      
-      validozilla_log.warn("Can't match expression: #{expr}")
+      puts("Can't match expression: #{expr}")
       # no match
       return nil
     end

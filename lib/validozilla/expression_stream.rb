@@ -42,7 +42,7 @@ module Validozilla
       @current_depth -= 1
 
       @current = @nesting.pop
-      @contents = @current if @current_depth == 0
+      
     end
     
     
@@ -61,6 +61,10 @@ module Validozilla
     
     def close!
       @current_depth.times { level_up }
+      @contents = @current if @current_depth == 0
+      
+      o = []
+
     end
     
     

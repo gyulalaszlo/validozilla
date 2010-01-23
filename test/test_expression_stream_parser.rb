@@ -47,4 +47,19 @@ class TestExpressionStreamParser < Test::Unit::TestCase
   end
   
   
+  
+  def test_klass_fields_from_file
+    vz = Validozilla::Vz.new( :file => vz_path('test_parsers') )
+    stream = vz.expression_stream
+    parser = Validozilla::ExpressionStreamParser.new
+    parser.stream = stream
+    parser.parse!
+    output = parser.blueprint
+
+    assert_equal( ['username'], output.field_names )
+    assert_equal( {'username' => [[:is_string], [:is_string_min_length, "15"]]}, output.field_attributes )
+    
+  end
+  
+  
 end

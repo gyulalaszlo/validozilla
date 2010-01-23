@@ -15,10 +15,9 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 
 
+
 module Validozilla
   VERSION = '0.0.1'
 end
 
-validozilla_log = Logger.new(STDOUT)
-validozilla_log.level = Logger::WARN
 

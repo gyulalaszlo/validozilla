@@ -15,7 +15,9 @@ class TestValidozilla < Test::Unit::TestCase
     vz = Validozilla::Vz.new( :file => vz_path('test_simple_file') )
     assert_equal ["Validate User",
      ["username is",
-      ["required", "a string", "alphanumeric", "between 3 and 15 characters"]]], vz.expression_stream.contents
+      ["required", "a string", "alphanumeric", "between 3 and 15 characters"]],
+     ["password is",
+       ["required", "a string", "alphanumeric", "min 6 chars"]]], vz.expression_stream.contents
   end
   
 

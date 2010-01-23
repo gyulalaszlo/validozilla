@@ -58,15 +58,15 @@ module Validozilla
     def get_fields
       @stream.contents.each do |expr|
         
-        # p expr
+        p expr
         if expr.is_a? Array
           field_match = match_with_syntax_error expr[0], FIELD_IS_REGEX, 'A field name must be given', 'Add a vaidated field with "<field_name> is"'
           field_name = field_match[1]
           @blueprint.field_names << field_name
+          field_properties = get_field_properties( expr)
+          @blueprint.add_attribute field_name, field_properties
           
-          @blueprint.field_attributes[field_name] = get_field_properties( expr)
-          
-          
+          # puts "added field #{field_name} with value #{field_properties.inspect}"
         end
       end
     end
@@ -75,6 +75,7 @@ module Validozilla
     
     def get_field_properties input_expr
       o = []
+      # p input_expr
       # one level deeper
       return nil unless input_expr[1].is_a? Array
       input_expr[1].each do |expr|

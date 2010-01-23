@@ -11,3 +11,7 @@ Validate User
     a string
     alphanumeric
     between 3 and 15 characters    
+  
+  password is
+    required
+    a string, alphanumeric, min 6 chars
