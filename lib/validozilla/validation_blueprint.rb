@@ -21,5 +21,23 @@ module Validozilla
     end
     
     
+    def generate_with generator
+      generator.entity_name = @klass_name
+      
+      generator.init!
+      
+      @field_names.each do |field_name|
+
+        @field_attributes[field_name].each do |attrib|
+          params = attrib.clone
+          meth_name = params.shift
+          generator.send meth_name, field_name, *params
+        end
+      end
+      
+      generator.save! ''
+    end
+    
+    
   end
 end

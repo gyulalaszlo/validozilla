@@ -21,6 +21,5 @@ module Validozilla
       end
     end
     
-    
   end
 end

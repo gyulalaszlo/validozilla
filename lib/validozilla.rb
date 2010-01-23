@@ -11,6 +11,9 @@ $:.unshift(File.dirname(__FILE__)) unless
 
   parser
   parser_loader
+  
+  abstract_generator
+  generators/ruby_plain/generator
 ).each { |f| require "validozilla/#{f}"}
 
 
