@@ -16,8 +16,7 @@ module Validozilla
         @current_depth = 1
         @index = 0
       
-        @current = []
-        @nesting = [@current]
+        @buffer = []
       end
     end
     
@@ -26,12 +25,12 @@ module Validozilla
     def << element
       if element.is_a? Array
         element.reject! { |e| e == ''  }
-        @current.push( *(element.flatten))
+        @buffer.push( *(element.flatten))
       else
-        @current.push element.to_s
+        @buffer.push element.to_s
       end
 
-      @index = @contents.size - 1 
+      @index = @buffer.size - 1 
     end
     
     
@@ -40,8 +39,7 @@ module Validozilla
     
     def level_up
       @current_depth -= 1
-
-      @current = @nesting.pop
+      @buffer << :up unless @current_depth < 0
       
     end
     
@@ -51,29 +49,56 @@ module Validozilla
     
     def level_down
       @current_depth += 1
-      new_level = []
-      @current << new_level
-      
-      @nesting.push @current
-      @current = new_level
+      @buffer << :down
     end
     
     
     def close!
       @current_depth.times { level_up }
-      @contents = @current if @current_depth == 0
+
+      o = [:down_placeholder]
       
-      o = []
+      @buffer.each_index do |i|
+        current_element = @buffer[i]
+        next_element = i < @buffer.size - 1 ? @buffer[i+1] : nil
+        if next_element == :down
+          o << :down_placeholder
+          o << current_element
+          o << :down
+        else
+          if next_element == nil
+            o << :up_placeholder
+          else
+            o << current_element 
+          end
+        end
+      end
+      @contents = eval(stream_to_sexp(o) )
 
     end
+    
+    
+    
+    
     
     
     def [] idx
       @contents[idx]
     end
 
+    private
     
+    def to_sexp(element)
+      return ']]' if element == :up
+      return ']' if element == :up_placeholder
+      return '[' if element == :down_placeholder
+      return '[' if element == :down
+      element.inspect
+    end
     
+    def stream_to_sexp o
+      o.collect{|el| to_sexp(el) }.join(',').gsub(',[,[,',',[').gsub('[,','[').gsub(',]',']')
+    end
     
   end
   
