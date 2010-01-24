@@ -1,9 +1,46 @@
 module Validozilla
   
+  module AbstractGeneratorClassMethods
+    module ClassMethods
+      
+      # define a method that outputs a given string
+      
+      def meth symbol, params , output
+        module_eval( "def #{symbol.to_s}(field, #{params.collect{|p| p.to_s}.join(',')})  @output << \"#{output.gsub(/"/, '\"')}\" end")
+      end
+      
+    end
+    
+    module InstanceMethods
+      
+    end
+    
+    def self.included(receiver)
+      receiver.extend         ClassMethods
+      receiver.send :include, InstanceMethods
+    end
+  end
+  
+  
   class AbstractGenerator
 
     attr_accessor :entity_name
+    include AbstractGeneratorClassMethods
     
+    def initialize
+
+    end
+    
+    
+    def start!
+      @output = IndentedBuffer.new
+      open!
+    end
+    
+    def stop! path
+      close! path
+      @output.to_s
+    end
     
   end
   

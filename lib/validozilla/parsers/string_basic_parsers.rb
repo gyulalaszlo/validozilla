@@ -3,6 +3,7 @@ p Validozilla::Parser
 Validozilla::Parser.match do |p|
   p.map 'String', /^a string$/ => :is_string
   p.map 'Whitespace related', [ 'contains no spaces', 'one word' ] => :has_no_spaces
+  p.map 'Line break related', [ 'contains no newlines', 'one line' ] => :is_one_line
   
   p.map 'Alphanumeric string', 
     [

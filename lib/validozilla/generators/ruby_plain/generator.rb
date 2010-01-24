@@ -3,8 +3,8 @@ module Validozilla
     
     class RubyPlain < Validozilla::AbstractGenerator
       
-      def init!
-        @output = IndentedBuffer.new
+      def open!
+       
         
         @output << "class #{entity_name}Validator"
         @output.indent
@@ -14,7 +14,7 @@ module Validozilla
         @output << "validation_errors.clear"
       end
       
-      def save! path
+      def close! path
         @output << "return validation_errors"        
         @output.outdent        
         @output << "end"
@@ -30,10 +30,18 @@ module Validozilla
         @output << "is_valid( '#{field}', obj.#{field}.is_a?(String), [:is_string] )"
       end
       
-      def is_string_length field, len
-        @output << "is_valid( '#{field}', obj.#{field}.size == #{len}, [:is_string_length, #{len}] )"
-      end
+      # meth :is_string, 'is_valid( "#{field}", obj.#{field}.is_a?(String), [:is_string] )'
       
+      meth :is_string_length, [:len], 
+            'is_valid( "#{field}", obj.#{field}.size == #{len}, [:is_string_length, #{len}] )'
+      
+      meth :is_string_min_length, [:len], 
+            'is_valid( "#{field}", obj.#{field}.size >= #{len}, [:is_string_min_length, #{len}] )'
+      
+      meth :is_string_max_length, [:len], 
+            'is_valid( "#{field}", obj.#{field}.size <= #{len}, [:is_string_max_length, #{len}] )'
+      
+
       
     end
     

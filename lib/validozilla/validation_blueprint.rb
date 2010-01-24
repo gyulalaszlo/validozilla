@@ -24,7 +24,7 @@ module Validozilla
     def generate_with generator
       generator.entity_name = @klass_name
       
-      generator.init!
+      generator.start!
       
       @field_names.each do |field_name|
 
@@ -35,7 +35,7 @@ module Validozilla
         end
       end
       
-      generator.save! ''
+      generator.stop! ''
     end
     
     
